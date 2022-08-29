@@ -1,5 +1,3 @@
-# LeetCodeSolutions
+leetcode solutions, Python或C++语言, 自学用
 
-自学用
-
-上传一些Python或C++的leetcode solution
+leetcode solutions, Python or C++, for self-learning
