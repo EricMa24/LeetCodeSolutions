@@ -1,0 +1,31 @@
+# 69. Sqrt(x)
+# bit-wise operations and bi-search
+# 37ms, 13.9MB
+
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        if not x: return 0
+        
+        # 2^0 <= 2^floor <= x <= 2^ceil <= 2^31 
+        # determine the ceil
+        mask = 0b1000000000000000000000000000000  # 2^30
+        ceil = 31
+        while not x & mask:
+            mask >>= 1
+            ceil -= 1
+        if not ceil: return 1
+        floor = ceil -1  # floor
+        
+        # 2^(floor // 2) <= sqrt(x) <= 2^((ceil + 1)) // 2)
+        left = 1 << (floor // 2)
+        right = 1 << ((ceil + 1) // 2)
+        
+        while(right > left):
+            mid = left + (right - left) // 2
+            x1 = mid * mid
+            if x1 == x: return mid
+            elif x1 < x:
+                left = mid + 1
+            else:
+                right = mid
+        return right-1
