@@ -1,0 +1,52 @@
+11. Container With Most Water
+# 737ms faster than 97%, 27.4MB
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        # v1 complete search O(n2)
+        # Time Limit Exceeded!
+        """
+        n = len(height)
+        res = 0;
+        
+        cases = ((i, j) for i in range(n-1) for j in range(i+1, n))
+        for i, j in cases:
+            res = max(res, (j-i)*min(height[i], height[j]))
+        
+        return res  """
+        
+        # v2 Incremenal flood O(n + max(height))
+        """
+        Initial the two boundaries are the first and last line. 
+        Imagine an incremental flood (water level) that increase 1 each time. At each time check if the two boundaries been submerged (less than water level), if so, move the boundaries toward inside
+        Repeat increasing flood and updating boundaries (if neccessery) until flood reaches highest line or no availble boundaries found
+        Cache the water amount stored by boundaries at each time boundaries updated
+        return the max water amount
+        """
+        
+        left, right = 0, len(height)-1
+        res = 0
+        res = max(res, (right - left) * min(height[left], height[right]))
+                        
+        for torrlent in range(1, max(height)):
+            # print(left, right);
+            if torrlent > height[left]:
+                for i in range(left+1, right):
+                    if height[i] >= torrlent:
+                        left = i
+                        res = max(res, (right - left) * min(height[left], height[right]))
+                        break
+                else:
+                    break
+                    
+            if torrlent > height[right]:
+                for i in range(right-1, left, -1):
+                    if height[i] >= torrlent:
+                        right = i
+                        res = max(res, (right - left) * min(height[left], height[right]))
+                        break
+                else:
+                    break
+            
+            
+        return max(res, (right - left) * min(height[left], height[right]))
