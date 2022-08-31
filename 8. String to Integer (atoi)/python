@@ -1,0 +1,29 @@
+# 8. String to Integer (atoi)
+# 43ms, 14MB
+
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        s = s.strip()
+        if not s: return 0
+        
+        if s[0] == "+":
+            sign = 1
+            s = s[1:]
+        elif s[0] == "-":
+            sign = -1
+            s = s[1:]
+        else:
+            sign = 1
+        
+        ret = ""
+        for char in s:
+            if char.isnumeric():
+                ret += char
+            else:
+                break
+        
+        if not ret: return 0
+        ret = int(ret) * sign
+        if ret > (1<<31)-1 : return (1<<31) - 1
+        elif ret < (-1<<31): return -1<<31
+        else: return ret
