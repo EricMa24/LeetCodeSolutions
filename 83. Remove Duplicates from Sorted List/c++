@@ -1,0 +1,32 @@
+// 83. Remove Duplicates from Sorted List
+// 7ms; 11.5MB
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+
+        ListNode *chead = head;
+        
+        while(chead && chead->next){
+            if(chead->next->val == chead->val){
+                chead->next = chead->next->next;
+            }
+            else{
+                chead = chead->next;
+            }
+        }
+        
+        return head;
+    }
+};
